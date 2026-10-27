@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Sillage İstanbul — stil dosyası
+   DeepStone — stil dosyası
    ========================================================================== */
 
 :root {
@@ -160,8 +160,11 @@ h1, h2, h3 { font-family: var(--f-head); font-weight: 300; letter-spacing: -.01e
   max-width: var(--max); height: 100%; margin: 0 auto; padding: 0 var(--gutter);
   display: flex; align-items: center; gap: 32px;
 }
-.brand { display: inline-flex; align-items: baseline; gap: 10px; text-decoration: none; line-height: 1; }
-.brand__word { font-family: var(--f-head); font-weight: 400; font-size: 21px; letter-spacing: .32em; }
+.brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; line-height: 1; }
+.brand__mark { width: 26px; height: 26px; flex: none; color: var(--rose); transition: transform 700ms var(--ease-out); }
+.brand:hover .brand__mark { transform: rotate(-8deg) translateY(-1px); }
+.brand__word { font-family: var(--f-head); font-weight: 300; font-size: 20px; letter-spacing: .2em; }
+.brand__word b { font-weight: 500; }
 .brand__city { font-size: 10.5px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--rose); }
 
 .nav { position: relative; margin-left: auto; }
@@ -541,7 +544,7 @@ h1, h2, h3 { font-family: var(--f-head); font-weight: 300; letter-spacing: -.01e
 .collection.is-active .photo__img.is-loaded { transform: scale(1.06); }
 .collection__top { display: flex; justify-content: space-between; align-items: flex-start; position: relative; z-index: 1; }
 .collection__index { font-size: 12px; font-weight: 600; letter-spacing: .1em; opacity: .7; }
-.collection__count { font-size: 11.5px; font-weight: 600; letter-spacing: .06em; padding: 6px 12px; border: 1px solid currentColor; border-radius: 999px; opacity: .75; }
+.collection__count { font-size: 11.5px; font-weight: 600; letter-spacing: .06em; padding: 6px 12px; border: 1px solid currentColor; border-radius: 999px; background: color-mix(in srgb, var(--c-bg) 72%, transparent); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
 .collection__art { position: absolute; left: 50%; top: 12%; translate: -50% 0; width: min(90%, 340px); height: 44%; display: flex; align-items: flex-end; justify-content: center; }
 .collection__art > div { width: 34%; flex: none; margin: 0 -4%; transition: transform var(--t-slow) var(--ease-out); }
 .collection__art > div:nth-child(2) { width: 42%; z-index: 1; }
@@ -837,7 +840,9 @@ h1, h2, h3 { font-family: var(--f-head); font-weight: 300; letter-spacing: -.01e
 
 @media (max-width: 640px) {
   :root { --header-h: 64px; }
-  .brand__word { font-size: 18px; letter-spacing: .26em; }
+  .brand__word { font-size: 17px; letter-spacing: .14em; }
+  .brand__mark { width: 22px; height: 22px; }
+  .brand__city { display: none; }
 
   .hero__art { height: 300px; margin-bottom: 64px; }
   .hero__notes li { font-size: 11px; padding: 6px 10px; }
@@ -911,3 +916,58 @@ h1, h2, h3 { font-family: var(--f-head); font-weight: 300; letter-spacing: -.01e
   .view.is-leaving, .dialog.is-closing { animation-name: fade-out; }
   .card.is-revealed .art__img.is-loaded, .card__media:hover .art__img.is-loaded, .collection.is-active .photo__img.is-loaded { transform: none; }
 }
+
+/* --------------------------------------------------------------------------
+   Ana sayfa satır bölümleri
+   -------------------------------------------------------------------------- */
+.home-featured + .home-featured { padding-top: clamp(40px, 5vw, 64px); }
+.grid--row .card { grid-column: span 3; }
+@media (max-width: 1180px) { .grid--row .card { grid-column: span 6; } }
+@media (max-width: 640px) { .grid--row .card { grid-column: 1 / -1; } }
+
+/* --------------------------------------------------------------------------
+   Duyuru şeridi (katalog.js → duyuruSeridi)
+   -------------------------------------------------------------------------- */
+.serit { position: relative; display: flex; align-items: center; justify-content: center; gap: 12px; min-height: 38px; padding: 6px 48px; background: var(--bordeaux); color: var(--cream); font-size: 13px; font-weight: 500; text-align: center; }
+.serit__text { margin: 0; }
+.serit__link { display: inline-flex; align-items: center; gap: 6px; color: inherit; text-decoration: none; background: none; border: 0; font: inherit; cursor: pointer; }
+.serit__link:hover { text-decoration: underline; text-underline-offset: 3px; }
+.serit__link .icon { width: 14px; height: 14px; }
+.serit__close { position: absolute; right: 10px; top: 50%; translate: 0 -50%; display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; color: inherit; opacity: .75; }
+.serit__close:hover { opacity: 1; background: rgba(255, 255, 255, .1); }
+.serit__close .icon { width: 14px; height: 14px; }
+
+/* --------------------------------------------------------------------------
+   Ana sayfa ilanları (katalog.js → ilanlar)
+   -------------------------------------------------------------------------- */
+.promo {
+  width: calc(100% - var(--gutter) * 2); max-width: calc(var(--max) - var(--gutter) * 2);
+  margin: clamp(48px, 7vw, 88px) auto 0;
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  border-radius: var(--radius-lg); overflow: hidden;
+  background: var(--green); color: var(--cream);
+}
+.promo--text { grid-template-columns: minmax(0, 1fr); }
+.promo__media { min-height: 320px; background: #111; }
+.promo__media .photo__img { transition: opacity 800ms var(--ease), transform 1400ms var(--ease-out); }
+.promo:hover .promo__media .photo__img.is-loaded { transform: scale(1.04); }
+.promo__body { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 14px; padding: clamp(28px, 5vw, 56px); }
+.promo__title { font-size: clamp(28px, 3vw, 40px); }
+.promo__text { color: rgba(242, 239, 233, .78); max-width: 46ch; }
+.promo .btn { margin-top: 6px; }
+@media (max-width: 760px) {
+  .promo { grid-template-columns: minmax(0, 1fr); }
+  .promo__media { min-height: 0; aspect-ratio: 16 / 10; }
+}
+
+/* 3'ten fazla koleksiyon olduğunda ızgara düzeni */
+.collections.collections--grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); height: auto; }
+.collections--grid .collection { min-height: 460px; }
+.collections--grid .collection.is-active { flex-grow: 0; }
+
+/* katalog.js uyarıları (yalnızca kendi bilgisayarınızda görünür) */
+.dev-warn { position: fixed; left: 16px; bottom: 16px; z-index: 500; max-width: min(460px, calc(100vw - 32px)); max-height: 50vh; overflow: auto; padding: 14px 40px 14px 16px; border-radius: 10px; background: #fff8e6; color: #5a3d00; border: 1px solid #e8c56b; box-shadow: var(--shadow); font-size: 13px; line-height: 1.45; }
+.dev-warn ul { margin: 8px 0; padding-left: 18px; list-style: disc; }
+.dev-warn small { color: #8a6a20; }
+.dev-warn button { position: absolute; right: 8px; top: 6px; width: 28px; height: 28px; font-size: 20px; line-height: 1; color: inherit; }
+.dev-warn--error { background: var(--bordeaux-soft); color: var(--bordeaux); border-color: rgba(116, 42, 56, .4); }
